@@ -1,13 +1,13 @@
 #include "game_grid.h"
 
-cgol::GameGrid::GameGrid(size_t gridWidth, size_t gridHeight, bool randomize)
+cgol::GameGrid::GameGrid(int gridWidth, int gridHeight, bool randomize)
         : m_width(gridWidth), m_height(gridHeight) {
 
     // Check input arguments
     checkGridDimensions(gridWidth, gridHeight);
 
     // Reserve space in memory for speedup
-    size_t gridArea = gridWidth * gridHeight;
+    int gridArea = gridWidth * gridHeight;
     m_entries.reserve(gridArea);
 
     // Fill grid with random entries
@@ -23,7 +23,7 @@ cgol::GameGrid::GameGrid(const cgol::GameGrid &grid) :
 }
 
 cgol::GameGrid::GameGrid(const cgol::GridRawEntries &rawEntries,
-                         size_t gridWidth, size_t gridHeight)
+                         int gridWidth, int gridHeight)
         : m_width(gridWidth), m_height(gridHeight) {
 
     checkGridDimensions(gridWidth, gridHeight);
@@ -35,15 +35,15 @@ cgol::GameGrid::GameGrid(const cgol::GridRawEntries &rawEntries,
     m_entries = rawEntries;
 }
 
-size_t cgol::GameGrid::getWidth() const {
+int cgol::GameGrid::getWidth() const {
     return m_width;
 }
 
-size_t cgol::GameGrid::getHeight() const {
+int cgol::GameGrid::getHeight() const {
     return m_height;
 }
 
-void cgol::GameGrid::checkGridDimensions(size_t gridWidth, size_t gridHeight) {
+void cgol::GameGrid::checkGridDimensions(int gridWidth, int gridHeight) {
     if (gridWidth > GRID_MAX_WIDTH || gridHeight > GRID_MAX_HEIGHT) {
         throw std::logic_error(
                 "Wrong grid's dimensions. Width's interval is <0, " +
@@ -61,7 +61,7 @@ int cgol::GameGrid::getEntry(int row, int col) {
     if (row < 0 || row >= m_height || col < 0 || col >= m_width) {
         return 0;
     } else {
-        size_t index = row * m_height + col;
+        int index = row * m_height + col;
         return m_entries[index];
     }
 
@@ -71,17 +71,29 @@ void cgol::GameGrid::setEntry(int row, int col, int value) {
     if(value != 0 && value !=1) {
         throw std::runtime_error("GameGrid can only take values 0 or 1");
     }
-    size_t index = row * m_height + col;
+    int index = row * m_height + col;
     m_entries[index] = value;
 }
 
 void cgol::GameGrid::print() {
     for(int i = 0; i < m_height; ++i) {
         for(int j = 0; j < m_width; ++j) {
-            std::cout << getEntry(j, i) << " ";
+            std::cout << getEntry(i, j) << " ";
         }
         std::cout << std::endl;
     }
 }
 
+bool cgol::GameGrid::operator== (const GameGrid &other)
+{
+    bool widthCheck = m_width == other.getWidth();
+    bool heightCheck = m_height == other.getHeight();
+
+    GridRawEntries otherRaw = other.getRawEntries();
+    for(int i = 0; i < m_width * m_height; ++i) {
+        if(otherRaw[i] != m_entries[i]) return false;
+    }
+
+    return widthCheck && heightCheck;
+}
 

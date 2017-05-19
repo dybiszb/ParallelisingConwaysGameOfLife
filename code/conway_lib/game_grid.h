@@ -17,10 +17,10 @@ namespace cgol {
 
     class GameGrid {
     public:
-        GameGrid(size_t gridWidth, size_t gridHeight, bool randomize = true);
+        GameGrid(int gridWidth, int gridHeight, bool randomize = true);
 
-        GameGrid(const GridRawEntries &rawEntries, size_t gridWidth,
-                 size_t gridHeight);
+        GameGrid(const GridRawEntries &rawEntries, int gridWidth,
+                 int gridHeight);
 
         GameGrid(const GameGrid &grid);
 
@@ -30,20 +30,22 @@ namespace cgol {
 
         void setEntry(int row, int col, int value);
 
-        size_t getWidth() const;
+        int getWidth() const;
 
-        size_t getHeight() const;
+        int getHeight() const;
 
         GridRawEntries getRawEntries() const;
 
         void print();
 
+        bool operator== (const GameGrid &other);
+
     private:
-        void checkGridDimensions(size_t gridWidth, size_t gridHeight);
+        void checkGridDimensions(int gridWidth, int gridHeight);
 
         GridRawEntries m_entries;
-        const size_t m_width;
-        const size_t m_height;
+        const int m_width;
+        const int m_height;
     };
 
     using GameGridSharedPtrT = std::shared_ptr<GameGrid>;

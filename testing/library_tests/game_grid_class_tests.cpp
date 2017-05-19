@@ -4,8 +4,8 @@
 
 
 TEST_CASE("GameGrid Class Test", "[conway_lib]") {
-    size_t gridWidth = 64;
-    size_t gridHeight = 64;
+    int gridWidth = 64;
+    int gridHeight = 64;
     cgol::GameGrid generalGame(gridWidth, gridHeight);
     cgol::GridRawEntries generalRawEntries = generalGame.getRawEntries();
 
@@ -18,8 +18,8 @@ TEST_CASE("GameGrid Class Test", "[conway_lib]") {
     }
 
     SECTION("Constructor With Zeros") {
-        size_t gridWidth = 2;
-        size_t gridHeight = 2;
+        int gridWidth = 2;
+        int gridHeight = 2;
         cgol::GameGrid game(gridWidth, gridHeight, false);
         cgol::GridRawEntries rawEntries = game.getRawEntries();
 
@@ -39,6 +39,16 @@ TEST_CASE("GameGrid Class Test", "[conway_lib]") {
 
     SECTION("Entries Set Exceptions"){
         REQUIRE_THROWS_AS(generalGame.setEntry(2, 3, -1), std::runtime_error);
+    }
+
+    SECTION("Comparision Operator") {
+        cgol::GameGrid otherCorrect(generalGame);
+        REQUIRE(generalGame == otherCorrect);
+
+        cgol::GridRawEntries incorrectRaw = generalGame.getRawEntries();
+        incorrectRaw[3] = (incorrectRaw[3] == 1) ? 0 : 1;
+        cgol::GameGrid otherIncorrect(incorrectRaw, gridWidth, gridHeight);
+        REQUIRE(!(generalGame == otherIncorrect));
     }
 
 }
