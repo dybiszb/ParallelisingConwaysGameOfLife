@@ -52,8 +52,17 @@ TEST_CASE("GameGrid Class Test", "[conway_lib]") {
         REQUIRE(generalRawEntries[2 * gridWidth + 3] == generalGame.getEntry(2, 3));
     }
 
-    SECTION("Entries Set Exceptions"){
+    SECTION("Entries Set - Wrong Value Exception"){
         REQUIRE_THROWS_AS(generalGame.setEntry(2, 3, -1), std::runtime_error);
+    }
+
+    SECTION("Entries Set - Wrong Column or Row Index"){
+        REQUIRE_THROWS_AS(generalGame.setEntry(-1, -1, 1), std::runtime_error);
+        REQUIRE_THROWS_AS(generalGame.setEntry(-1, 1, 1), std::runtime_error);
+        REQUIRE_THROWS_AS(generalGame.setEntry(1, -1, 1), std::runtime_error);
+        REQUIRE_THROWS_AS(generalGame.setEntry(0, gridWidth, 1), std::runtime_error);
+        REQUIRE_THROWS_AS(generalGame.setEntry(gridHeight, 0, 1), std::runtime_error);
+        REQUIRE_THROWS_AS(generalGame.setEntry(gridHeight, gridWidth, 1), std::runtime_error);
     }
 
     SECTION("Comparision Operator") {
