@@ -7,7 +7,8 @@ SET(LIB_SOURCE_FILES
         conway_lib/conway.cpp
         conway_lib/game_grid.cpp
         conway_lib/strategies.cpp
-        conway_lib/utilities.cpp)
+        conway_lib/utilities.cpp
+        conway_lib/io.cpp)
 
 add_library(Conway ${LIB_SOURCE_FILES})
 

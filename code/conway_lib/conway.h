@@ -19,7 +19,7 @@ namespace cgol {
         ConwaysGameOfLife(GameGridSharedPtrT &inputGrid);
 
         /**
-         * Simulate Conway's Game of Life for specified number of steps.
+         * Simulates Conway's Game of Life for specified number of steps.
          * Resulting grid at each step will be stored in vector and returned
          * for further processing. Please note that the procedure does not
          * modify the input grid, hence multiple strategies can be performed on
