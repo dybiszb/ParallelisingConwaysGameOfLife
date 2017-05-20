@@ -121,6 +121,7 @@ namespace cgol {
 
     private:
         void checkGridDimensions(int gridWidth, int gridHeight);
+        void checkDataCorrectness(const cgol::GridRawEntries &data);
 
         GridRawEntries m_entries;
         const int m_width;

@@ -29,7 +29,7 @@ cgol::GameGrid::GameGrid(const cgol::GridRawEntries &rawEntries,
         rawEntries.size() / gridHeight != gridWidth) {
         throw std::runtime_error("Error: raw entry data has wrong dimensions");
     }
-
+    checkDataCorrectness(rawEntries);
     m_entries = rawEntries;
 }
 
@@ -43,12 +43,20 @@ int cgol::GameGrid::getHeight() const {
 
 void cgol::GameGrid::checkGridDimensions(int gridWidth, int gridHeight) {
     if (gridWidth > GRID_MAX_WIDTH || gridHeight > GRID_MAX_HEIGHT ||
-        gridWidth < 0 || gridHeight < 0) {
+        gridWidth <= 0 || gridHeight <= 0) {
         throw std::logic_error(
                 "Wrong grid's dimensions. Width's interval is <0, " +
                 std::to_string(GRID_MAX_WIDTH) +
                 ">. Height's interval is <0, " +
                 std::to_string(GRID_MAX_HEIGHT) + ">.");
+    }
+}
+
+void cgol::GameGrid::checkDataCorrectness(const cgol::GridRawEntries &data) {
+    for(const auto& entry : data) {
+        if(entry != 0 && entry != 1) {
+            throw std::runtime_error("Entries different from 0 and 1");
+        }
     }
 }
 

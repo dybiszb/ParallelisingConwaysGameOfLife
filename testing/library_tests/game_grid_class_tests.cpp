@@ -34,6 +34,12 @@ TEST_CASE("GameGrid Class Test", "[conway_lib]") {
         REQUIRE_NOTHROW(cgol::GameGrid(rawEntries, 2, 2));
     }
 
+    SECTION("Constructor From Raw Data - Wrong Data") {
+        std::vector<int> rawEntries(4, 0);
+        rawEntries[0] = -3;
+        REQUIRE_THROWS_AS(cgol::GameGrid(rawEntries, 1, 4), std::runtime_error);
+    }
+
     SECTION("Constructor From Raw Data - Consistency") {
         std::vector<int> rawEntries = {1, 0, 1, 0};
         cgol::GameGrid rawGrid(rawEntries, 2, 2);
