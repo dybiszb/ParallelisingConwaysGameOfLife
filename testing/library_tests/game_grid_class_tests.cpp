@@ -26,8 +26,23 @@ TEST_CASE("GameGrid Class Test", "[conway_lib]") {
         for(const auto& entry : rawEntries) REQUIRE(entry == 0);
     }
 
-    SECTION("Constructor From Raw Data") {
-        // TODO
+    SECTION("Constructor From Raw Data - Dimensions") {
+        std::vector<int> rawEntries(4, 0);
+        REQUIRE_THROWS_AS(cgol::GameGrid(rawEntries, 1, 1), std::runtime_error);
+        REQUIRE_NOTHROW(cgol::GameGrid(rawEntries, 4, 1));
+        REQUIRE_NOTHROW(cgol::GameGrid(rawEntries, 1, 4));
+        REQUIRE_NOTHROW(cgol::GameGrid(rawEntries, 2, 2));
+    }
+
+    SECTION("Constructor From Raw Data - Consistency") {
+        std::vector<int> rawEntries = {1, 0, 1, 0};
+        cgol::GameGrid rawGrid(rawEntries, 2, 2);
+        cgol::GridRawEntries retrieved = rawGrid.getRawEntries();
+
+        REQUIRE(retrieved[0] == rawEntries[0]);
+        REQUIRE(retrieved[1] == rawEntries[1]);
+        REQUIRE(retrieved[2] == rawEntries[2]);
+        REQUIRE(retrieved[3] == rawEntries[3]);
     }
 
     SECTION("Entries Acquisition"){
