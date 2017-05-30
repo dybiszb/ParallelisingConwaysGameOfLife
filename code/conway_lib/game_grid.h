@@ -5,8 +5,7 @@
 #include <memory>
 #include <vector>
 #include <random>
-
-
+#include <sstream>
 #include "utilities.h"
 
 namespace cgol {
@@ -110,6 +109,15 @@ namespace cgol {
         void print();
 
         /**
+         * Converts specified row of the grid into coma separated string.
+         *
+         * @param row Number of row to be onsidered.
+         *
+         * @return String object of the row's entries.
+         */
+        std::string getRowAsString(const int row);
+
+        /**
          * Compares two grids entries. If they do not match, false will be
          * return. Otherwise, true.
          *
@@ -129,7 +137,7 @@ namespace cgol {
     };
 
     using GameGridSharedPtrT = std::shared_ptr<GameGrid>;
-    using StepsHistorySharedPtrT = std::vector<GameGridSharedPtrT>;
+    using StepsHistoryT = std::vector<GameGridSharedPtrT>;
 }
 
 #endif

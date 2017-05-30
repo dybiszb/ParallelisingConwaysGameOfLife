@@ -27,12 +27,12 @@ cgol::calculateStep(const GameGridSharedPtrT &prev, GameGridSharedPtrT &next,
     }
 }
 
-const cgol::StepsHistorySharedPtrT
+const cgol::StepsHistoryT
 cgol::strategyCPU(const cgol::GameGridSharedPtrT &inputGrid,
                   int steps) {
 
     GameGridSharedPtrT prev = std::make_shared<GameGrid>(*(inputGrid.get()));
-    cgol::StepsHistorySharedPtrT stepsHistory;
+    cgol::StepsHistoryT stepsHistory;
     stepsHistory.push_back(prev);
 
     for (int i = 0; i < steps; ++i) {

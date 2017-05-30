@@ -13,7 +13,7 @@
 namespace cgol {
 
     using StrategyT =
-    std::function<const cgol::StepsHistorySharedPtrT(
+    std::function<const cgol::StepsHistoryT(
             const cgol::GameGridSharedPtrT &inputGrid,
             size_t steps)>;
 
@@ -46,7 +46,7 @@ namespace cgol {
      * @return A vector of grids - each calculated at different step of the
      *         simulation.
      */
-    const cgol::StepsHistorySharedPtrT
+    const cgol::StepsHistoryT
     strategyCPU(const cgol::GameGridSharedPtrT &inputGrid, int steps);
 }
 

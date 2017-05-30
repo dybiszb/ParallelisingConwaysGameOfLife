@@ -68,10 +68,20 @@ int cgol::GameGrid::getEntry(int row, int col) {
     if (row < 0 || row >= m_height || col < 0 || col >= m_width) {
         return 0;
     } else {
-        int index = row * m_height + col;
+        int index = row * m_width + col;
         return m_entries[index];
     }
 
+}
+
+std::string cgol::GameGrid::getRowAsString(const int row) {
+    std::stringstream ss;
+
+    for(int i = 0; i < m_width; ++i){
+        ss << getEntry(row, i) << ' ';
+    }
+
+    return ss.str();
 }
 
 void cgol::GameGrid::setEntry(int row, int col, int value) {
@@ -81,17 +91,15 @@ void cgol::GameGrid::setEntry(int row, int col, int value) {
     if(row < 0 || row >= m_height || col < 0 || col >= m_width) {
         throw std::runtime_error("ROw or column index is not correct.");
     }
-    int index = row * m_height + col;
+    int index = row * m_width + col;
     m_entries[index] = value;
 }
 
 void cgol::GameGrid::print() {
     for (int i = 0; i < m_height; ++i) {
-        for (int j = 0; j < m_width; ++j) {
-            std::cout << getEntry(i, j) << " ";
-        }
-        std::cout << std::endl;
+        std::cout << getRowAsString(i) << std::endl;
     }
+    std::cout << std::endl;
 }
 
 bool cgol::GameGrid::operator==(const GameGrid &other) {

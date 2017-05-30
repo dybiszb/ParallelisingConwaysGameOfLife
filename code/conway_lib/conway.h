@@ -30,7 +30,7 @@ namespace cgol {
          *
          * @return Vector of grids from consecutive steps of the application.
          */
-        const cgol::StepsHistorySharedPtrT
+        const cgol::StepsHistoryT
         run(const StrategyT &strategy, int steps);
 
     private:

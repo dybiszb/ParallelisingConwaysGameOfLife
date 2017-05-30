@@ -7,7 +7,7 @@ cgol::ConwaysGameOfLife::ConwaysGameOfLife(GameGridSharedPtrT &inputGrid) {
     m_inputGrid = inputGrid;
 }
 
-const cgol::StepsHistorySharedPtrT
+const cgol::StepsHistoryT
 cgol::ConwaysGameOfLife::run(const cgol::StrategyT &strategy, int steps) {
     if(strategy == nullptr) {
         throw std::runtime_error("Error: inout strategy is nullptr");

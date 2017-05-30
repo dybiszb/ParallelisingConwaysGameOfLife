@@ -1,6 +1,7 @@
 #define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() - only do this in one cpp file
 
 #include <catch.hpp>
+#include <io.h>
 #include "conway.h"
 
 TEST_CASE("ConwaysGameOfLife", "[conway_lib]") {
@@ -36,7 +37,7 @@ TEST_CASE("ConwaysGameOfLife", "[conway_lib]") {
                 oscillator, 5, 5);
         cgol::ConwaysGameOfLife oscillatorGame(oscillatorGrid);
 
-        const cgol::StepsHistorySharedPtrT history = oscillatorGame.run(
+        const cgol::StepsHistoryT history = oscillatorGame.run(
                 cgol::strategyCPU, 2);
 
         // Consistency with input grid
@@ -51,6 +52,24 @@ TEST_CASE("ConwaysGameOfLife", "[conway_lib]") {
 
         // Oscillation Check
         REQUIRE(*history[2].get() == *oscillatorGrid.get());
+    }
+
+    SECTION("Temporary") {
+        cgol::GameGridSharedPtrT loaded = cgol::loadGridFromFile(
+                "./resources/correct_file_structure_1.txt");
+        cgol::GridRawEntries re = loaded->getRawEntries();
+
+        cgol::ConwaysGameOfLife oscillatorGame(loaded);
+
+        const cgol::StepsHistoryT history = oscillatorGame.run(
+                cgol::strategyCPU, 10);
+
+        for(int i = 0; i < history.size(); ++i) {
+            history[i]->print();
+            std::cout << std::endl;
+        }
+
+        cgol::dumpGameHistory(history, "./DUMP_TEST.txt");
     }
 }
 

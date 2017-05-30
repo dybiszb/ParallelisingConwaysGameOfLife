@@ -27,10 +27,11 @@ namespace cgol {
      *
      * @return GameGrid object corresponding to grid loaded from file.
      */
-    GameGrid loadGridFromFile(const std::string& path);
+    cgol::GameGridSharedPtrT loadGridFromFile(const std::string &path);
 
 
-    void saveGridToFile(const GameGrid& grid, const std::string& path);
+    void dumpGameHistory(const StepsHistoryT &steps,
+                         const std::string &path);
 
 }
 
