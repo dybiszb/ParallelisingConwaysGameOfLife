@@ -24,21 +24,6 @@ namespace cgol {
      * @param n          Number of entries to filled.
      */
     void initializeRawEntriesWithZeros(std::vector<int>& rawEntries, int n);
-
-    /**
-     * MinGW compiler for some reason does not support the std::to_string,
-     * hence this little wrapper.
-     *
-     * @tparam T
-     * @param n
-     * @return
-     */
-    template < typename T > std::string customToString( const T& n )
-    {
-        std::ostringstream stm ;
-        stm << n ;
-        return stm.str() ;
-    }
 }
 
 #endif

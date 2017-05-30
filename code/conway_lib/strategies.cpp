@@ -53,3 +53,29 @@ cgol::strategyCPU(const cgol::GameGridSharedPtrT &inputGrid,
 
     return stepsHistory;
 }
+
+const cgol::StepsHistoryT
+cgol::strategyOpenMP(const cgol::GameGridSharedPtrT &inputGrid, int steps) {
+
+    GameGridSharedPtrT prev = std::make_shared<GameGrid>(*(inputGrid.get()));
+    cgol::StepsHistoryT stepsHistory;
+    stepsHistory.push_back(prev);
+
+    for (int i = 0; i < steps; ++i) {
+        // Create a grid for next step
+        GameGridSharedPtrT next = std::make_shared<GameGrid>(
+                inputGrid->getWidth(), inputGrid->getHeight(), false);
+
+        for (int row = 0; row < inputGrid->getHeight(); ++row) {
+            for (int col = 0; col < inputGrid->getWidth(); ++col) {
+                calculateStep(prev, next, row, col);
+            }
+        }
+
+        // Save next step
+        stepsHistory.push_back(next);
+        prev = next;
+    }
+
+    return stepsHistory;
+}

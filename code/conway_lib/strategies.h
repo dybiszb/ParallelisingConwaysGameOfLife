@@ -48,6 +48,9 @@ namespace cgol {
      */
     const cgol::StepsHistoryT
     strategyCPU(const cgol::GameGridSharedPtrT &inputGrid, int steps);
+
+    const cgol::StepsHistoryT
+    strategyOpenMP(const cgol::GameGridSharedPtrT &inputGrid, int steps);
 }
 
 
